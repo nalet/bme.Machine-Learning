@@ -1,0 +1,211 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx} %This allows to include eps figures
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{layout}
+\usepackage{etoolbox}
+\usepackage{mathabx}
+% This is to include code
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinestyle{Python}{
+    language        = Python,
+    basicstyle      = \ttfamily,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\title{Review Assignment 1}%replace X with the appropriate number
+\author{Nalet Meinen \\ %replace with your name
+Machine Learning
+}
+
+\maketitle
+
+\section{Linear algebra review}
+
+\begin{enumerate}
+    \item S = $\{v_1, ... , v_n\}$ be an orthogonal set of non-zero vectors in $R^n$. Prove that the vectors in $S$ are linearly independent.
+
+    \noindent\rule{\linewidth}{1pt}
+
+    We assume a linear combination
+    \begin{align*} 
+        c_1 v_1 + c_2 v_2 + ... + c_k v_k = 0
+    \end{align*}
+    We want to show that
+    \begin{align*} 
+        c_1 = c_2 = ... = 0
+    \end{align*}
+    The dot product of $v_i$ for each $ i = 1,2, ... , k $:
+    \begin{align*} 
+        0 &= v_i \cdot 0 \\
+          &= v_i \cdot (c_1 v_1 + c_2 v_2 + ... + c_k v_k) \\
+          &= c_1 v_i \cdot v_1 + c_2 v_i \cdot v_2 + ... + c_k v_i \cdot v_k
+    \end{align*}
+    $S$ is an orthogonal set, we have $v_i \cdot v_j = 0 \, \textrm{if} \, i \neq j $, then we have:
+    \begin{align*} 
+        0 = c_i v_i \cdot v_i = c_i \|v_i\|^2
+    \end{align*}
+    $v_i$ is nonzero and length $\|v_i\|$ is nonzero, following that $c_i = 0$ \newline
+    We conclude that $c_1 v_1 + c_2 v_2 + ... + c_k v_k = 0$ for every $ i = 1,2, ... , k $, so $S$ is \textbf{linearly independent}
+
+    \item Given a square matrix $A \in \mathbb{R}^{n \times n}$ and a vector $x \in \mathbb{R}^n$ show that $x^\intercal Ax = x^\intercal ( \frac{1}{2} A + \frac{1}{2} A^\intercal )x$.
+    
+    \noindent\rule{\linewidth}{1pt}
+
+    We assume that:
+
+    \begin{align*} 
+        A = 
+        \begin{bmatrix}
+            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
+            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
+            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
+            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
+        \end{bmatrix}
+        x = 
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix}
+        \quad \emph{where} \, m = n
+    \end{align*}
+
+    The transposed values are:
+
+    \begin{align*} 
+        A^\intercal = 
+        \begin{bmatrix}
+            a_{11}    &   a_{21}    & \dots     &   a_{m1}    \\
+            a_{12}    &   a_{22}    & \dots     &   a_{2n}    \\
+            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
+            a_{1n}    &   a_{2n}    & \dots     &   a_{mn}    \\
+        \end{bmatrix}
+        x^\intercal = 
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix}
+    \end{align*}
+
+    We want to show that this equation is true:
+    \begin{align*} 
+        x^\intercal Ax = x^\intercal ( \frac{1}{2} A + \frac{1}{2} A^\intercal )x
+    \end{align*}
+
+    If we insert the matrices:
+    \begin{align*}
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix} 
+        \begin{bmatrix}
+            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
+            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
+            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
+            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
+        \end{bmatrix}
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix}
+        = 
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix} (\frac{1}{2} 
+        \begin{bmatrix}
+            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
+            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
+            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
+            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
+        \end{bmatrix}
+         + \frac{1}{2}
+        \begin{bmatrix}
+            a_{11}    &   a_{21}    & \dots     &   a_{m1}    \\
+            a_{12}    &   a_{22}    & \dots     &   a_{2n}    \\
+            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
+            a_{1n}    &   a_{2n}    & \dots     &   a_{mn}    \\
+        \end{bmatrix})
+        \begin{pmatrix}
+            b_1     &
+            b_2     &
+            \dots  &
+            b_m
+        \end{pmatrix}
+    \end{align*}
+    
+\end{enumerate}    
+
+% The implicit representation of a cylinder goes as
+% \[ \|x - c\|^2 - r^2 - (x-c) \cdot \vec d = 0 \]
+
+% \noindent Where $\vec d$ is the direction of the cylinder from the center 
+% \newline
+
+% \noindent We plug in the ray parameterization from
+
+% \[ x = o + t \cdot d \]
+
+% \noindent therefore we get
+
+% \[ \|o + t \cdot d - c\|^2 - r^2 - (o + t \cdot d - c) \cdot \vec d = 0 \]
+
+
+% \noindent resulting in the final from
+
+% \begin{align*} t^2 \cdot \|d\|^2 - (\vec d - ( o - c) )^2 \cdot \\
+% t \cdot 2 \cdot ((d - (o - c)) - (\vec d - ( o - c) ) \cdot (o - c) ) \cdot \\
+% \|(o - c) - (o - c)\|^2 - (\vec d - (o - c))^2 - r^2= 0 
+% \end{align*}
+
+
+\end{document}
