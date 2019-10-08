@@ -91,142 +91,46 @@ Machine Learning
     
     \noindent\rule{\linewidth}{1pt}
 
-    We assume that:
+    From theory we know that $(cA)^\intercal = cA^\intercal$. Therefore we can transform the term $x^\intercal Ax$
 
-    \begin{align*} 
-        A = 
-        \begin{bmatrix}
-            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
-            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
-            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
-            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
-        \end{bmatrix}
-        x = 
-        \begin{pmatrix}
-            b_1     &
-            b_2     &
-            \dots  &
-            b_m
-        \end{pmatrix}
-        \quad \emph{where} \, m = n
-    \end{align*}
-
-    The transposed values are:
-
-    \begin{align*} 
-        A^\intercal = 
-        \begin{bmatrix}
-            a_{11}    &   a_{21}    & \dots     &   a_{m1}    \\
-            a_{12}    &   a_{22}    & \dots     &   a_{2n}    \\
-            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
-            a_{1n}    &   a_{2n}    & \dots     &   a_{mn}    \\
-        \end{bmatrix}
-        x^\intercal = 
-        \begin{pmatrix}
-            b_1     &
-            b_2     &
-            \dots  &
-            b_m
-        \end{pmatrix}
-    \end{align*}
-
-    We want to show that this equation is true:
-    \begin{align*} 
-        x^\intercal Ax = x^\intercal ( \frac{1}{2} A + \frac{1}{2} A^\intercal )x
-    \end{align*}
-
-    If we insert the matrices:
     \begin{align*}
-        \begin{pmatrix}
-            b_1     &
-            b_2     &
-            \dots  &
-            b_m
-        \end{pmatrix} 
-        \begin{bmatrix}
-            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
-            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
-            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
-            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
-        \end{bmatrix}
-        \begin{pmatrix}
-            b_1     \\
-            b_2     \\
-            \dots  \\
-            b_m
-        \end{pmatrix}
-        = \\
-        \begin{pmatrix}
-            b_1     &
-            b_2     &
-            \dots  &
-            b_m
-        \end{pmatrix} (\frac{1}{2} 
-        \begin{bmatrix}
-            a_{11}    &   a_{12}    & \dots     &   a_{1n}    \\
-            a_{21}    &   a_{22}    & \dots     &   a_{2n}    \\
-            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
-            a_{m1}    &   a_{m2}    & \dots     &   a_{mn}    \\
-        \end{bmatrix}
-         + \frac{1}{2}
-        \begin{bmatrix}
-            a_{11}    &   a_{21}    & \dots     &   a_{m1}    \\
-            a_{12}    &   a_{22}    & \dots     &   a_{2n}    \\
-            \vdots    &  \vdots     & \vdots    &   \vdots    \\   
-            a_{1n}    &   a_{2n}    & \dots     &   a_{mn}    \\
-        \end{bmatrix})
-        \begin{pmatrix}
-            b_1     \\
-            b_2     \\
-            \dots  \\
-            b_m
-        \end{pmatrix}
+        x^\intercal Ax \rightarrow (x^\intercal Ax)^\intercal \rightarrow x^\intercal A^\intercal x
     \end{align*}
 
-    Calculating in two steps:
+    This is similar to the goal in parentheses.
+
     \begin{align*}
-        ((a_{11} \cdot b_{1} + a_{21} \cdot b_{2} + a_{m1} \cdot b_{3}) \cdot b_{1} + (a_{12} \cdot b_{1} + a_{22} \cdot b_{2} \\
-        + a_{32} \cdot b_{3}) \cdot b_{2} + (a_{1n} \cdot b_{1} + a_{2n} \cdot b_{2} + a_{mn} \cdot b_{3}) \cdot b_{3}) = \\
-        \begin{pmatrix}
-            b_1     &
-            b_2     &
-            \dots  &
-            b_m
-        \end{pmatrix} 
-        (\begin{bmatrix}
-            a_{11}                       &   \frac{a_{12} + a_{21}}{2}    & \dots     &   \frac{a_{1n} + a_{m1}}{2}   \\
-            \frac{a_{12} + a_{21}}{2}    &   a_{22}                       & \dots     &   \frac{a_{12} + a_{21}}{2}   \\
-            \vdots                       &   \vdots                       & \vdots    &   \vdots                      \\   
-            \frac{a_{1n} + a_{m1}}{2}    &   \frac{a_{2n} + a_{32}}{2}    & \dots     &   a_{mn}                      \\
-        \end{bmatrix})
-        \begin{pmatrix}
-            b_1     \\
-            b_2     \\
-            \dots  \\
-            b_m
-        \end{pmatrix}
+        x^\intercal A^\intercal x \rightarrow \frac{(x^\intercal Ax) + (x^\intercal A^\intercal x)}{2}
     \end{align*}
+
+    By writing the divisor 2 outsite of the brackets we become
+
     \begin{align*}
-        ((a_{11} \cdot b_{1} + a_{21} \cdot b_{2} + a_{m1} \cdot b_{3}) \cdot b_{1} + (a_{12} \cdot b_{1} + a_{22} \cdot b_{2} \\
-        + a_{32} \cdot b_{3}) \cdot b_{2} + (a_{1n} \cdot b_{1} + a_{2n} \cdot b_{2} + a_{mn} \cdot b_{3}) \cdot b_{3}) = \\
-        (\frac{1}{2} \cdot (2 \cdot a_{11} \cdot b_{1} + (a_{12} + a_{21}) \cdot b_{2} + (a_{1n} + a_{m1}) \cdot b_{3}) \cdot b_{1} + \\
-        \frac{1}{2} \cdot ((a_{12} + a_{21}) \cdot b_{1} + 2 \cdot a_{22} \cdot b_{2} + (a_{2n} + a_{32}) \cdot b_{3}) \cdot b_{2} + \\ 
-        \frac{1}{2} \cdot ((a_{1n} + a_{m1}) \cdot b_{1} + (a_{2n} + a_{32}) \cdot b_{2} + 2 \cdot a_{mn} \cdot b_{3}) \cdot b_{3})
+        \frac{(x^\intercal Ax) + (x^\intercal A^\intercal x)}{2} \rightarrow 
+        \frac{1}{2} (x^\intercal Ax + x^\intercal A^\intercal x) \rightarrow 
+         x^\intercal ( \frac{1}{2} A + \frac{1}{2} A^\intercal ) x
     \end{align*}
+
+    Finally
+    \begin{align*}
+        x^\intercal Ax = x^\intercal ( \frac{1}{2} A + \frac{1}{2} A^\intercal ) x
+    \end{align*}
+
 
     \item Show that if $(A + B)^{-1} = A^{-1} + B^{-1}$ then $A B^{-1} A = B A^{-1} B$
     
     \noindent\rule{\linewidth}{1pt}
 
+    We knew from theory $A A^{-1} = A^{-1} A = I$ where $I$ is equal to the identity matrix.
+
     \begin{align*}
-                (A B^{-1} A )( B A^{-1} B ) &= I \, | \, \textrm{premultiply by} \, A^{-1} \\
-         A^{-1} (A B^{-1} A )( B A^{-1} B ) &= A^{-1} I \\
-               I ( B^{-1} A )( B A^{-1} B ) &= A^{-1} \\
-                 ( B^{-1} A )( B A^{-1} B ) &= A^{-1} \, | \, \textrm{premultiply by} \, B \\
-               B ( B^{-1} A )( B A^{-1} B ) &= B A^{-1} \\
-                           A ( B A^{-1} B ) &= B A^{-1} \, \textrm{premultiply by} \, A^{-1} \\
-                    A^{-1} A ( B A^{-1} B ) &= A^{-1} B A^{-1} \\
-                                 B A^{-1} B &= A^{-1} B A^{-1}
+        (A B^{-1} A)^{-1} (B A^{-1} B) &= I \\
+        (A^{-1}  B A^{-1} ) (B A^{-1} B) &= I \quad | \textrm{premultiply by} \; A \\
+        A (A^{-1}  B A^{-1} ) (B A^{-1} B) &= A I\\
+        I B A^{-1} (B A^{-1} B) &= A I\\
+         B A^{-1} (B A^{-1} B) &= A \quad | \textrm{premultiply by} \; B^{-1}  \\
+         &\vdots \\
+         B A^{-1} B &= A B^{-1} A
     \end{align*}
 
     \item Use the definition of trace to show that $\textrm{tr}(A + B) = \textrm{tr}A + \textrm{tr}B$, where $A, B \in \mathbb{R}^{n \times n}$
@@ -235,18 +139,17 @@ Machine Learning
 
     \begin{align*}
         \textrm{tr}(A) &= \sum_{i=1}^{n} a_{ii} \quad \textrm{if} \, A = \textrm{squared matrix} \\
-        \textrm{tr}(A + B) &\rightarrow \textrm{tr}(C) \\
-        C &= 
+        \textrm{tr}(A + B) &= \sum_{i=1}^{n} a_{ii} + b_{ii}\\
+        \textrm{tr}(A + B) &= 
         \begin{bmatrix}
             a_{11} + b_{11}  &   \dots            &   \dots            \\
-            \dots            &   a_{22} + b_{22}  &   \dots            \\
-            \vdots           &   \vdots           &   \vdots           \\   
+            \vdots           &   a_{22} + b_{22}  &   \vdots           \\  
             \dots            &   \dots            &   a_{nn} + b_{nn}  \\
         \end{bmatrix} \\
-        \textrm{tr}(C) &= ( a_{11} + b_{11}  ) + ( a_{22} + b_{22} ) + ( \dots ) + ( a_{nn} + b_{nn}  ) \\
-        \textrm{tr}(C) &= a_{11} + b_{11} + \dots +  a_{nn}  +  a_{22} + b_{22}  +  \dots   + b_{nn}   \\
-        \textrm{tr}(C) &= ( a_{11} + b_{11} + \dots +  a_{nn} ) + ( a_{22} + b_{22}  +  \dots   + b_{nn} )   \\
-        \textrm{tr}(C) &= \textrm{tr}(A) + \textrm{tr}(B)
+         &= ( a_{11} + b_{11}  ) + ( a_{22} + b_{22} ) + ( \dots ) + ( a_{nn} + b_{nn}  ) \\
+         &= a_{11} + b_{11} + \dots +  a_{nn}  +  a_{22} + b_{22}  +  \dots   + b_{nn}   \\
+         &= ( a_{11} + b_{11} + \dots +  a_{nn} ) + ( a_{22} + b_{22}  +  \dots   + b_{nn} )   \\
+         &= \textrm{tr}(A) + \textrm{tr}(B)
     \end{align*}   
 
     \item Show that if $(\lambda_i, x_i)$ are the $i$-th eigenvalue and $i$-th eigenvector of a non-singular and symmetric matrix 
@@ -273,12 +176,9 @@ Machine Learning
     
     \noindent\rule{\linewidth}{1pt}
 
-    where $m$ corresponds to the number of rows and $n$ to the number of columns
-    
-    \begin{align*}
-        \textrm{row-rank}(A) \leq m \quad \textbf{and} \quad  \textrm{column-rank}(A) \leq n \\
-        \textrm{row-rank}(A) = \textrm{column-rank}(A) = \textrm{rank}(A) \leq n 
-    \end{align*}     
+    We know that column rank and row rank of any matrix is equal. Also we know that the column rank is at most
+    equal to the number of columns and the row rank is at most equal to the number of rows. These two consideration implies
+    that $\textrm(rank(A)) \leq \textrm{min}\{m, n\}.   
 
     \item In each of the following cases, state whether the real matrix A is guaranteed to be singular or not. Justify your answer in each case.
     
@@ -288,31 +188,31 @@ Machine Learning
         
         \noindent\rule{\linewidth}{1pt}
 
-        A singular matrix is never a full-rank, because only if $\textrm{rank}(A) \leq \textrm{min}\{m,n\}$ is equal.
+        No. A non-singular matrices should be square.
 
         \item $|A| = 0$.
         
         \noindent\rule{\linewidth}{1pt}
 
-        When the determinant is zero, then the matrix is singular.
+        No. An square matrix $A$ is non-singular if and only $|A| \neq 0$
 
         \item $A$ is an orthogonal matrix.
         
         \noindent\rule{\linewidth}{1pt} 
         
-        The transpose of an orthogonal matrix is equal to its inverse, hence this matrix is non-singular and invertible.
+        Yes, For an orthogonal matrix $Q$ we have $Q^\intercal Q = QQ^\intercal = I$ so $Q$ is non singular and $Q^{-1} = Q^\intercal$
 
         \item $A$ has no eigenvalue equal to zero.
         
         \noindent\rule{\linewidth}{1pt}
 
-        If a matrix has non-zero eigenvalues, then it is invertible.
+        Yes, we know that $|A| = \prod \lambda_i$. So if $A$ has no zero eigenvalue, then $|A| \neq 0$ so $A$ is non-singular.
 
         \item $A$ is a symmetric matrix with non-negative eigenvalues.
         
         \noindent\rule{\linewidth}{1pt}
 
-        When all eigenvalues are positive a matrix is invertible.
+        No. We know that if $A$ is a symmetric matrix then $x^\intercal A = \sum_{i=1}^{n}$ and it is positive/negative for any $x$ if and only if all the eigenvalues are positive/negative.
 
     \end{enumerate}
     

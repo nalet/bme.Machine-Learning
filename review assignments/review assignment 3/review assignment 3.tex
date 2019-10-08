@@ -13,6 +13,8 @@
 \usepackage{layout}
 \usepackage{etoolbox}
 \usepackage{mathabx}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
 % This is to include code
 \usepackage{listings}
 \usepackage{xcolor}
@@ -68,23 +70,101 @@ Solve each of the following problems and show all the steps of your working.
      
     \noindent\rule{\linewidth}{1pt}
     \begin{align*}
-        \sum_{ij} = \textrm{cov}(x_i,x_j) &= E[x_i x_j] - E[x_i] E[x_j] \\
-                                          &= E[x_j x_i] - E[x_j] E[x_i] \\
+        \Sigma_{ij} = \textrm{cov}(x_i,x_j) &= \Sigma[x_i x_j] - \Sigma[x_i] \Sigma[x_j] \\
+                                          &= \Sigma[x_j x_i] - \Sigma[x_j] \Sigma[x_i] \\
     \end{align*}
 
-    $E$ is symmetric
+    $\Sigma$ is symmetric
 
+    \begin{align*}
+        z^\intercal \Sigma z \geq 0
+    \end{align*}
     
-    \item $X \in \mathbb{R}^n$ and $Y \in \mathbb{R}^m$ are independent random variables. Their expectations and covariances are $E[X]=0$, $Cov[X] = I$, $E[Y] = \mu$ and $Cov[Y] = \sigma I$, 
-        where $I$ is the identity matrix of the appropriate size and s is a scalar. What is the expectation and covariance of the random variable $Z = AX + Y$ , where $A \in \mathbb{R}^{m \times n}$? 
+    when all eigenvalues are larger then zero or equal, a matrix can be symmetric and positive semidefinite
+
+    \begin{align*}
+        [z_1 z_2 \dots z_n] 
+        \begin{bmatrix}
+            \Sigma_{11}      &   \dots            &   \dots            \\
+            \vdots           &   \ddots           &   \vdots           \\
+            \dots            &   \dots            &   \Sigma_{nn}      \\
+        \end{bmatrix}
+        \begin{pmatrix}
+            z_1     \\
+            z_2     \\
+            \dots  \\
+            z_n
+        \end{pmatrix}
+    \end{align*}
+
+    \begin{align*}
+        z^\intercal \Sigma z &= \sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma_{ij} z_i z_j \\
+                             &= \sum_{i=1}^{n} \sum_{j=1}^{n} \textrm{cov}[x_i x_j] z_i z_j \\
+                             &= \sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma[(x_i - E[x_i])(x_j - E[x_j])] z_i z_j \\
+                             &= E[\sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma[(x_i - E[x_i])(x_j - E[x_j])] z_i z_j] \\
+                             &= E[(x^\intercal z)^2] \\
+    \end{align*}
+
+    $E[(x^\intercal z)^2] \geq 0$ when $z \neq 0$
+
+    \item $X \in \mathbb{R}^n$ and $Y \in \mathbb{R}^m$ are independent random variables. Their expectations and covariances are $E[X]=0$, $\textrm{cov}[X] = I$, $E[Y] = \mu$ and $\textrm{cov}[Y] = \sigma I$, 
+        where $I$ is the identity matrix of the appropriate size and s is a scalar. What is the expectation and covariance of the random variable $z = AX + Y$ , where $A \in \mathbb{R}^{m \times n}$? 
     
     \noindent\rule{\linewidth}{1pt}
+
+    \begin{align*}
+        z_i &= \sum_{j=1}^{n}(A_{ij}x_j) + Y_i \\
+        \Sigma[z] &= \Sigma[Ax+Y] \\
+        &=  [A] \Sigma[x] + \Sigma[Y] \\
+        &= 0 + \mu = \mu
+    \end{align*}
+
+    \begin{align*}
+        \textrm{var}(z) &= \textrm{var}(Ax+Y) \\
+                        &= \textrm{var}(Ax) + \textrm{var}(Y) \\
+                        &= AA^\intercal \textrm{var}(X) + \textrm{var}(Y) \\
+                        &= \mathbb{R}^{m \times n} + \mathbb{m \times m} \\
+                        &= AA^\intercal + \sigma I
+    \end{align*}
     
     \item Thomas and Viktor are friends. It is Friday night and Thomas does not have a phone. Viktor knows that there is a 2/3 probability that Thomas goes to the party to downtown. 
           There are 5 pubs in downtown and there is an equal probability of Thomas going to any of them if he goes to the party. Viktor already looked for Thomas in 4 of the bars. 
           What is the probability of Viktor ending Thomas in the last bar? 
     
     \noindent\rule{\linewidth}{1pt}
+
+    The sample space is
+    \begin{align*}
+        S = f\{\textrm{home}, \textrm{pub 1}, \textrm{pub 2}, \textrm{pub 3}, \textrm{pub 4}, \textrm{pub 5}\}
+    \end{align*}
+    and the probability of the events are $P(\textrm{home}) = 1=3$ and $P("pub i") = 2=15$. We need to compute $P("pub 5"j"not in pub 1 ... 4")$.
+    Using the Bayes rule,
+    \begin{align*}
+    P("pub 5"j"not in pub 1 ... 4") =
+    P("pub 5" \ "not in pub 1 ... 4")
+    P("not in pub 1 ... 4")
+    =
+    2=15
+    7=15
+    =
+    2
+    7
+    :
+    \end{align*}
+    Note that :
+    P("not in pub 1 ... 4") = P("home"and"not in pub 1 ... 4") + P("out"and"not in pub 1 ... 4") =
+    1
+    3
+     1 +
+    2
+    3
+    
+    1
+    5
+    =
+    7
+    15
+
     \item Derive the mean for the Beta Distribution, which is defined as 
     \begin{equation}
         \textrm{Beta}(x|a, b)= \frac{1}{B(a, b) } a^{-1}(1 - x)b^{-1} 
@@ -115,6 +195,16 @@ Solve each of the following problems and show all the steps of your working.
     where $x_1, \dots x_n$ are random variables and $f$ is a probability density function of its arguments. 
 
     \noindent\rule{\linewidth}{1pt}
+
+    \begin{align*}
+        a
+    \end{align*}
+
+    $n=2$
+
+    \begin{align*}
+        a
+    \end{align*}
 \end{enumerate}
 
 \end{document}
