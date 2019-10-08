@@ -1,0 +1,134 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx} %This allows to include eps figures
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{layout}
+\usepackage{etoolbox}
+\usepackage{mathabx}
+% This is to include code
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinestyle{Python}{
+    language        = Python,
+    basicstyle      = \ttfamily,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\title{Review Assignment 2}%replace X with the appropriate number
+\author{Nalet Meinen \\ %replace with your name
+Machine Learning
+}
+
+\maketitle
+
+\section{Calculus review}
+
+Recall that the Jacobian of a function $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is an $m \times n$ matrix of partial derivatives 
+
+\begin{align*}
+    D f(x) = 
+    \begin{bmatrix}
+        \frac{\partial f_1(x)}{\partial x_1}    &   \frac{\partial f_1(x)}{\partial x_2}    & \dots     &   \frac{\partial f_1(x)}{\partial x_n}  \\
+        \frac{\partial f_2(x)}{\partial x_1}    &   \frac{\partial f_2(x)}{\partial x_2}    & \dots     &   \frac{\partial f_2(x)}{\partial x_3}  \\
+        \vdots                                  &   \vdots                                  & \ddots    &   \vdots                                \\   
+        \frac{\partial f_m(x)}{\partial x_1}    &   \frac{\partial f_m(x)}{\partial x_2}    & \dots     &   \frac{\partial f_m(x)}{\partial x_n}  \\
+    \end{bmatrix}
+\end{align*}
+
+\noindent where $ x =[x_1 x_2 \dots x_n]^\intercal$ , $f(x)=[f_1(x) f_2(x) \dots f_m(x)]^\intercal$ and $\frac{\partial f_i(x)}{\partial x_j}$ is the partial derivative of the $i$-th output with respect to the $j$-th input. 
+When $f$ is a scalar-valued function (i.e., when $f : \mathbb{R}^n \rightarrow \mathbb{R}$), the Jacobian $Df(x)$ is a $1 \times n$ matrix, i.e., it is a row vector. Its transpose is called the \textit{gradient} of the function 
+
+\begin{equation}
+    \nabla f(x) = D f(x)^\intercal
+    \begin{bmatrix}
+        \frac{\partial f_1(x)}{\partial x_1}  \\
+        \frac{\partial f(x)}{\partial x_2}  \\
+        \vdots                                \\   
+        \frac{\partial f(x)}{\partial x_n}  \\
+    \end{bmatrix}
+\end{equation}
+
+\noindent Also, recall that the \textbf{chain rule} is a tool to calculate gradients of function compositions.
+Suppose $f : \mathbb{R}^n \rightarrow \mathbb{R}^m$ is differentiable at $x$ and $g : \mathbb{R}^m \rightarrow \mathbb{R}^p$ is differentiable at $f(x)$.
+Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f(z))$. Then $h$ is differentiable at $x$, with Jacobian
+\begin{equation}
+    Dh(x) = Dg(z)\Bigr|_{\substack{z=f(x)}} Df(x). 
+\end{equation}
+
+\begin{enumerate}
+
+    \item Consider the function $g : \mathbb{R}^m \rightarrow \mathbb{R}$ with $g(x)= x^\intercal x$. We can readily calculate the gradient $\nabla g(x)=2x$ by noticing that 
+    
+    \begin{equation}
+        \forall j = 1, \dots, n \qquad \frac{\partial x^\intercal x}{\partial x_j} = \frac{\partial x^2 j}{\partial x_j} = 2x_j \rightarrow \nabla g(x) = 2x
+    \end{equation}
+
+    Consider also the function $a : \mathbb{R}^n \rightarrow \mathbb{R}^m$ with $a(x)= Ax$, and $A \in \mathbb{R}^{m \times n}$. The Jacobian of $a(x)$ is $Da(x)= A$. 
+    Given this, answer the following questions by using the above definitions (show all the steps of your working) 
+
+    \begin{enumerate}
+
+        \item Consider the function $h : \mathbb{R}^n \rightarrow \mathbb{R}$ and $h(x)= x^\intercal Qx$, where $Q \in \mathbb{R}^{n \times n}$ is a symmetric matrix. Calculate .$h(x)$ by using the product rule, the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
+        \item Consider the function $f : \mathbb{R}^n \rightarrow \mathbb{R}$, where $f(x)= \lVert Ax - b \rVert ^2$ , $A \in \mathbb{R}^{m \times n}$ , and $b \in \mathbb{R}^m $. Calculate $\nabla h(x)$ by using the chain rule in eq. (2), the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
+        \item Consider a function $f : \mathbb{R}^n \rightarrow \mathbb{R}$. Suppose we have a matrix $A \in \mathbb{R}^{n \times m}$ and a vector $x \in \mathbb{R}^m $. Calculate $\nabla xf(Ax)$ as a function of $\nabla xf(x)$.
+        \item Show that
+        \begin{align*}
+            \frac{\partial}{\partial X} \sum_{i=1}{n} \lambda_i = 1
+        \end{align*}
+        where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
+        \item Show that
+        \begin{align*}
+            \frac{\partial}{\partial X} \prod_{i=1}{n} \lambda_i = \textrm(det)(X)X^{-\intercal}
+        \end{align*}
+        where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
+    \end{enumerate}   
+    
+    \item Assume $A \in \mathbb{R}^{m \times n} $, $X \in \mathbb{R}^{m \times n} $, and $B \in \mathbb{R}^{m \times m} $. Show that $\nabla X \textrm{tr}(AX^\intercal B) = BA$
+    
+    \item Solve the following equality constrained optimization problem
+    \begin{align*}
+        \underset{\textrm{max}}{x \in \mathbb{R}^n} x^\intercal Ax \qquad \textrm{subject to} \; b^\intercal x=1
+    \end{align*}
+    for a symmetric matrix $A \in \mathbb{S}^n $. Assume that $A$ is invertible and $b \neq 0$. 
+
+\end{enumerate}
+
+\end{document}

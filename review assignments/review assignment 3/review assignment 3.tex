@@ -1,0 +1,120 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+
+\documentclass[12pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{graphicx} %This allows to include eps figures
+\usepackage{subcaption}
+\usepackage[section]{placeins}
+\usepackage{layout}
+\usepackage{etoolbox}
+\usepackage{mathabx}
+% This is to include code
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+\lstdefinestyle{Python}{
+    language        = Python,
+    basicstyle      = \ttfamily,
+    keywordstyle    = \color{blue},
+    keywordstyle    = [2] \color{teal}, % just to check that it works
+    stringstyle     = \color{green},
+    commentstyle    = \color{red}\ttfamily
+}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{reflection}[2][Reflection]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{proposition}[2][Proposition]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\begin{document}
+
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+%\renewcommand{\qedsymbol}{\filledbox}
+
+\title{Review Assignment 1}%replace X with the appropriate number
+\author{Nalet Meinen \\ %replace with your name
+Machine Learning
+}
+
+\maketitle
+
+\section{Probability theory review}
+
+Solve each of the following problems and show all the steps of your working.
+
+\begin{enumerate}
+    \item Show that the covariance matrix is always symmetric and positive semidefinite.
+     
+    \noindent\rule{\linewidth}{1pt}
+    \begin{align*}
+        \sum_{ij} = \textrm{cov}(x_i,x_j) &= E[x_i x_j] - E[x_i] E[x_j] \\
+                                          &= E[x_j x_i] - E[x_j] E[x_i] \\
+    \end{align*}
+
+    $E$ is symmetric
+
+    
+    \item $X \in \mathbb{R}^n$ and $Y \in \mathbb{R}^m$ are independent random variables. Their expectations and covariances are $E[X]=0$, $Cov[X] = I$, $E[Y] = \mu$ and $Cov[Y] = \sigma I$, 
+        where $I$ is the identity matrix of the appropriate size and s is a scalar. What is the expectation and covariance of the random variable $Z = AX + Y$ , where $A \in \mathbb{R}^{m \times n}$? 
+    
+    \noindent\rule{\linewidth}{1pt}
+    
+    \item Thomas and Viktor are friends. It is Friday night and Thomas does not have a phone. Viktor knows that there is a 2/3 probability that Thomas goes to the party to downtown. 
+          There are 5 pubs in downtown and there is an equal probability of Thomas going to any of them if he goes to the party. Viktor already looked for Thomas in 4 of the bars. 
+          What is the probability of Viktor ending Thomas in the last bar? 
+    
+    \noindent\rule{\linewidth}{1pt}
+    \item Derive the mean for the Beta Distribution, which is defined as 
+    \begin{equation}
+        \textrm{Beta}(x|a, b)= \frac{1}{B(a, b) } a^{-1}(1 - x)b^{-1} 
+    \end{equation}
+    where $B(a, b), G(a)$ are Beta and Gamma functions respectively: 
+    \begin{equation}
+        B(a, b) \triangleq \frac{\Gamma(a)\Gamma(b)}{\Gamma(a + b) }
+    \end{equation}
+    and 
+    \begin{equation}
+        \Gamma(x) \triangleq \int_0^{\infty } u^{x-1} e^{-u} d u
+    \end{equation}
+
+    \textit{Hint: Use integration by parts. }
+
+    \noindent\rule{\linewidth}{1pt}
+    \item Let $A \in \mathbb{R}^{n \times n}$ be a positive definite square matrix, $b \in \mathbb{R}^n$ , and $c$ be a scalar. Prove that
+    \begin{align*}  
+        \int_{x \in \mathbb{R}^n} e^{-\frac{1}{2} x^\intercal Ax-x^\intercal b-c } dx = \frac{(2\pi)^{n/2} |A|^{-1/2} }{e^{c{-\frac{1}{2}b^\intercal A^{-1} b}}}
+    \end{align*}
+    \textit{Hint: Use the fact that the integral of the Gaussian probability density function of a random variable with mean $\mu$ and covariance $\sum$ is 1.}
+    
+    \noindent\rule{\linewidth}{1pt}
+    \item From the definition of conditional probability of multiple random variables, show that 
+    \begin{align*}
+        f(x_1,x_2, \dots x_n) = f(x_1) \prod_{i=2}^{n} f(x_i | x_1, \dots x_{i-1})
+    \end{align*}
+    where $x_1, \dots x_n$ are random variables and $f$ is a probability density function of its arguments. 
+
+    \noindent\rule{\linewidth}{1pt}
+\end{enumerate}
+
+\end{document}
