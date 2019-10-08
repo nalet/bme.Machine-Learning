@@ -159,18 +159,8 @@ Machine Learning
     \noindent\rule{\linewidth}{1pt}
 
     \begin{align*}
-        x_i y_i^\intercal = [x_i][y_i] = 
-        \begin{bmatrix}
-            x_1 y_1          &   x_1 y_2          &   \dots            \\
-            x_2 y_1          &   \dots            &   \dots            \\
-            \vdots           &   \vdots           &   \vdots            
-        \end{bmatrix}
+        Ax = \lambda_i x_i \rightarrow x_i = \lambda_i A^{-1} x_i \rightarrow A^{-1} x_i = \frac{1}{\lambda_i} x
     \end{align*}
-    
-    For $A,B \in \mathbb{R}^{m \times n}$, $\textrm{rank}(A+B) \leq \textrm{rank}(A) + \textrm{rank}(B)$
-    \begin{align*}
-        \sum_{i=1}^m x_i - y_i^\intercal \leq m 
-    \end{align*}   
 
     \item Show that $\textrm{rank}(A) \leq \textrm{min}\{m, n\}$, where $A, B \in \mathbb{R}^{m \times n}$
     
@@ -178,7 +168,7 @@ Machine Learning
 
     We know that column rank and row rank of any matrix is equal. Also we know that the column rank is at most
     equal to the number of columns and the row rank is at most equal to the number of rows. These two consideration implies
-    that $\textrm(rank(A)) \leq \textrm{min}\{m, n\}.   
+    that $\textrm(rank(A)) \leq \textrm{min}\{m, n\}$.   
 
     \item In each of the following cases, state whether the real matrix A is guaranteed to be singular or not. Justify your answer in each case.
     
