@@ -69,63 +69,39 @@ Solve each of the following problems and show all the steps of your working.
     \item Show that the covariance matrix is always symmetric and positive semidefinite.
      
     \noindent\rule{\linewidth}{1pt}
+    The $(i; j)^{th}$ element of the covariance matrix $\Sigma$ is given by
     \begin{align*}
-        \Sigma_{ij} = \textrm{cov}(x_i,x_j) &= \Sigma[x_i x_j] - \Sigma[x_i] \Sigma[x_j] \\
-                                          &= \Sigma[x_j x_i] - \Sigma[x_j] \Sigma[x_i] \\
+        \Sigma_{ij} = E[(X_i - \mu_i)(X_j - \mu_j )] = E[(X_j - \mu_j)(X_i - \mu_i)] = \Sigma_{ji}
     \end{align*}
+    so that the covariance matrix is symmetric.
 
-    $\Sigma$ is symmetric
-
+    For an arbitrary vector u,
     \begin{align*}
-        z^\intercal \Sigma z \geq 0
+        u^\intercal \Sigma u &= u^\intercal E[(X-\mu)(X-\mu)^\intercal]u = E[(u^\intercal (X - \mu)(X - \mu)^\intercal) u] \\
+        &= E[((X - \mu)^\intercal u)^\intercal (X-\mu)^\intercal u] = E[((X-\mu)^\intercal u)^2] \geq 0
     \end{align*}
-    
-    when all eigenvalues are larger then zero or equal, a matrix can be symmetric and positive semidefinite
-
-    \begin{align*}
-        [z_1 z_2 \dots z_n] 
-        \begin{bmatrix}
-            \Sigma_{11}      &   \dots            &   \dots            \\
-            \vdots           &   \ddots           &   \vdots           \\
-            \dots            &   \dots            &   \Sigma_{nn}      \\
-        \end{bmatrix}
-        \begin{pmatrix}
-            z_1     \\
-            z_2     \\
-            \dots  \\
-            z_n
-        \end{pmatrix}
-    \end{align*}
-
-    \begin{align*}
-        z^\intercal \Sigma z &= \sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma_{ij} z_i z_j \\
-                             &= \sum_{i=1}^{n} \sum_{j=1}^{n} \textrm{cov}[x_i x_j] z_i z_j \\
-                             &= \sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma[(x_i - E[x_i])(x_j - E[x_j])] z_i z_j \\
-                             &= E[\sum_{i=1}^{n} \sum_{j=1}^{n} \Sigma[(x_i - E[x_i])(x_j - E[x_j])] z_i z_j] \\
-                             &= E[(x^\intercal z)^2] \\
-    \end{align*}
-
-    $E[(x^\intercal z)^2] \geq 0$ when $z \neq 0$
+    so that the covariance matrix is positive semi-definite.
 
     \item $X \in \mathbb{R}^n$ and $Y \in \mathbb{R}^m$ are independent random variables. Their expectations and covariances are $E[X]=0$, $\textrm{cov}[X] = I$, $E[Y] = \mu$ and $\textrm{cov}[Y] = \sigma I$, 
         where $I$ is the identity matrix of the appropriate size and s is a scalar. What is the expectation and covariance of the random variable $z = AX + Y$ , where $A \in \mathbb{R}^{m \times n}$? 
     
     \noindent\rule{\linewidth}{1pt}
 
-    \begin{align*}
-        z_i &= \sum_{j=1}^{n}(A_{ij}x_j) + Y_i \\
-        \Sigma[z] &= \Sigma[Ax+Y] \\
-        &=  [A] \Sigma[x] + \Sigma[Y] \\
-        &= 0 + \mu = \mu
-    \end{align*}
+    The expectation of Z can be obtained from the definition by applying the linearity of expectation,
 
     \begin{align*}
-        \textrm{var}(z) &= \textrm{var}(Ax+Y) \\
-                        &= \textrm{var}(Ax) + \textrm{var}(Y) \\
-                        &= AA^\intercal \textrm{var}(X) + \textrm{var}(Y) \\
-                        &= \mathbb{R}^{m \times n} + \mathbb{m \times m} \\
-                        &= AA^\intercal + \sigma I
+        E[Z] = E[AX+Y] = AE[x]+E[Y] = 0 +\mu = \mu
     \end{align*}
+
+    The covariance of $Z$ is $\textrm{Cov}[Z] = E[ZZ^\intercal] - E[Z]E[Z]^\intercal = E[ZZ^\intercal] - \mu \mu^\intercal $. Substituting the definition of $Z$, we get the expression below.
+
+    \begin{align*}
+        E[ZZ^\intercal ] &= E[(AX + Y )(AX + Y )^\intercal ] = \\ 
+               &= E[AXX^\intercal A^\intercal  + Y X^\intercal A^\intercal  + AXY^\intercal  + Y Y^\intercal ] = \\
+               &= AE[XX^\intercal ]A^\intercal  + E[Y X^\intercal ]A^\intercal  + AE[XY^\intercal ] + E[Y Y^\intercal ] \\
+    \end{align*}
+
+    Here we can substitute $E[XX^\intercal ] = I$ and $E[Y Y^\intercal ] = \sigma I+\mu\mu^\intercal $. Because $X$ and $Y$ are independent, $E[XY^\intercal ] = E[X]E[Y^\intercal = 0$, similarly $E[Y X^\intercal ] = 0$. We get $E[ZZ^\intercal ] = AA^\intercal  + \sigma I + \mu\mu^\intercal $, therefore $\textrm{Cov}[Z] = AA^\intercal  + \sigma I$.
     
     \item Thomas and Viktor are friends. It is Friday night and Thomas does not have a phone. Viktor knows that there is a 2/3 probability that Thomas goes to the party to downtown. 
           There are 5 pubs in downtown and there is an equal probability of Thomas going to any of them if he goes to the party. Viktor already looked for Thomas in 4 of the bars. 
@@ -137,33 +113,12 @@ Solve each of the following problems and show all the steps of your working.
     \begin{align*}
         S = f\{\textrm{home}, \textrm{pub 1}, \textrm{pub 2}, \textrm{pub 3}, \textrm{pub 4}, \textrm{pub 5}\}
     \end{align*}
-    and the probability of the events are $P(\textrm{home}) = 1=3$ and $P("pub i") = 2=15$. We need to compute $P("pub 5"j"not in pub 1 ... 4")$.
+    and the probability of the events are $P(\textrm{home}) = 1=3$ and $P(\textrm{pub} \; i) = \frac{2}{15}$. We need to compute $P(\textrm{pub 5}|\textrm{not in pub} \; 1 \dots 4)$.
     Using the Bayes rule,
     \begin{align*}
-    P("pub 5"j"not in pub 1 ... 4") =
-    P("pub 5" \ "not in pub 1 ... 4")
-    P("not in pub 1 ... 4")
-    =
-    2=15
-    7=15
-    =
-    2
-    7
-    :
-    \end{align*}
-    Note that :
-    P("not in pub 1 ... 4") = P("home"and"not in pub 1 ... 4") + P("out"and"not in pub 1 ... 4") =
-    1
-    3
-     1 +
-    2
-    3
-    
-    1
-    5
-    =
-    7
-    15
+        P(\textrm{pub 5}|\textrm{not in pub} \; 1 \dots 4) &=\\
+        \frac{P(\textrm{pub 5} \cap \textrm{not in pub} \; 1 \dots 4)}{P(\textrm{not in pub} \; 1 \dots 4)} &= \frac{\frac{2}{15}}{\frac{7}{15}} = \frac{2}{7}
+    \end{align*}    
 
     \item Derive the mean for the Beta Distribution, which is defined as 
     \begin{equation}
