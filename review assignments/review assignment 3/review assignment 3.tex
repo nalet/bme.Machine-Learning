@@ -135,6 +135,8 @@ Solve each of the following problems and show all the steps of your working.
 
     \textit{Hint: Use integration by parts. }
 
+    \noindent\rule{\linewidth}{1pt}
+
     \begin{align*}
         E(x) &= \frac{1}{\textrm{Beta}(a,b)} \int_0^1 x^a(1-x)^{b-1} dx \\
              &= \frac{\textrm{Beta}(a + 1,b)}{\textrm{Beta}(a,b)} \\
@@ -143,7 +145,7 @@ Solve each of the following problems and show all the steps of your working.
              &= \frac{a}{a+b}
     \end{align*}
 
-    \noindent\rule{\linewidth}{1pt}
+    
     \item Let $A \in \mathbb{R}^{n \times n}$ be a positive definite square matrix, $b \in \mathbb{R}^n$ , and $c$ be a scalar. Prove that
     \begin{align*}  
         \int_{x \in \mathbb{R}^n} e^{-\frac{1}{2} x^\intercal Ax-x^\intercal b-c } dx = \frac{(2\pi)^{n/2} |A|^{-1/2} }{e^{c{-\frac{1}{2}b^\intercal A^{-1} b}}}
@@ -152,13 +154,17 @@ Solve each of the following problems and show all the steps of your working.
 
     \noindent\rule{\linewidth}{1pt}
 
+    We know from theory: $f(x) = \frac{1}{(2\pi)^\frac{n}{2} |\Sigma|^{\frac{1}{2}}} e^{-\frac{1}{2}(x-\mu)^\intercal |\Sigma|^{-1} (x-\mu)}$
+
     \begin{align*}
         \frac{(2\pi)^{n/2} |A|^{-1/2} }{e^{c{-\frac{1}{2}b^\intercal A^{-1} b}}} &= \int_{x \in \mathbb{R}^n} e^{-\frac{1}{2} x^\intercal Ax-x^\intercal b-c } dx \\
         &= \int_{x \in \mathbb{R}^n} e^{-\frac{1}{2} (x + A^{-1} b)^\intercal A(x+A^{-1} b) + \frac{1}{2} b^\intercal A^{-1} b -c } dx \\
-        &= \sqrt{(2\pi)^n |\Sigma|} \cdot e^{\frac{1}{2} b^\intercal A^{-1} b -c} \int_{x \in \mathbb{R}^n} \frac{1}{\sqrt{(2\pi)^n |\Sigma|}} e^{-\frac{1}{2} (x + A^{-1} b)^\intercal A(x+A^{-1} b) } dx \\
-        &= \sqrt{(2\pi)^n |\Sigma|} \cdot e^{\frac{1}{2} b^\intercal A^{-1} b -c} \cdot 1 \\
-        &= \frac{\sqrt{(2\pi)^n |\Sigma|}}{e^{\frac{1}{2} b^\intercal A^{-1} b -c}}
+        &= (2\pi)^\frac{n}{2} |\Sigma|^{\frac{1}{2}} \cdot e^{\frac{1}{2} b^\intercal A^{-1} b -c} \int_{x \in \mathbb{R}^n} \frac{1}{(2\pi)^\frac{n}{2} |\Sigma|^{\frac{1}{2}}} e^{-\frac{1}{2} (x + A^{-1} b)^\intercal A(x+A^{-1} b) } dx \\
+        &= (2\pi)^\frac{n}{2} |\Sigma|^{\frac{1}{2}} \cdot e^{\frac{1}{2} b^\intercal A^{-1} b -c} \cdot 1 \\
+        &= \frac{(2\pi)^\frac{n}{2} |\Sigma|^{\frac{1}{2}}}{e^{\frac{1}{2} b^\intercal A^{-1} b -c}}
     \end{align*}
+
+    \textit{We can replace $\Sigma$ with the ones corresponding to the formula.}
     
     \item From the definition of conditional probability of multiple random variables, show that 
     \begin{align*}

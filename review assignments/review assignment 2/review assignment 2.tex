@@ -120,20 +120,21 @@ Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f
         \item Consider the function $f : \mathbb{R}^n \rightarrow \mathbb{R}$, where $f(x)= \lVert Ax - b \rVert ^2$ , $A \in \mathbb{R}^{m \times n}$ , and $b \in \mathbb{R}^m $. Calculate $\nabla h(x)$ by using the chain rule in eq. (2), the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
         
         \noindent\rule{\linewidth}{1pt}
-        
-        \item Consider a function $f : \mathbb{R}^n \rightarrow \mathbb{R}$. Suppose we have a matrix $A \in \mathbb{R}^{n \times m}$ and a vector $x \in \mathbb{R}^m $. Calculate $\nabla xf(Ax)$ as a function of $\nabla xf(x)$.
-        
-        \noindent\rule{\linewidth}{1pt}
 
         \begin{align*}
             \lVert Ax - b \rVert ^2 &= (Ax - b)^\intercal (Ax - b) \\
             &= x^\intercal A^\intercal Ax-2b^\intercal Ax+b^\intercal b \\
         \end{align*}
 
+        From that we can use the steps like in (a)
+
         \begin{align*}
-            \nabla h(x) &= \frac{\partial x^\intercal A^\intercal Ax-2b^\intercal Ax^\intercal}{\partial x} \\
-                        &= 2Qx
+            \nabla h(x) &= 2A^\intercal Ax - 2A^\intercal b
         \end{align*}
+        
+        \item Consider a function $f : \mathbb{R}^n \rightarrow \mathbb{R}$. Suppose we have a matrix $A \in \mathbb{R}^{n \times m}$ and a vector $x \in \mathbb{R}^m $. Calculate $\nabla xf(Ax)$ as a function of $\nabla xf(x)$.
+        
+        \noindent\rule{\linewidth}{1pt}
         
         \item Show that
         \begin{align*}
@@ -142,6 +143,16 @@ Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f
         where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
 
         \noindent\rule{\linewidth}{1pt}
+
+        We know form theory $f(x) = \sum_{i=1}{n} \lambda_i = \sum_{i=1}^{n} x_{ii}$
+
+        \begin{align*}
+            \frac{\partial}{\partial x} f(x) = 
+            \begin{bmatrix}
+                \frac{\partial f(x)}{\partial x_{11}}  &   \frac{\partial f(x)}{\partial x_{1n}}  \\
+                \frac{\partial f(x)}{\partial x_{n1}}  &   \frac{\partial f(x)}{\partial x_{nn}}  \\
+            \end{bmatrix}
+        \end{align*}
 
         \item Show that
         \begin{align*}
@@ -185,7 +196,10 @@ Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f
     the gradient of the Lagrangian w.r.t. $x$ has to be zero at $x*$. That is,
 
     \begin{align*}
-        \nabla_x (\mathcal{L}(x, \lambda)) = \nabla_x (x^\intercal Ax - \lambda b^\intercal x) \overset{!}{=} 2Ax - 2\lambda b \
+        \nabla_x (\mathcal{L}(x, \lambda)) = \nabla_x (x^\intercal Ax - \lambda b^\intercal x) = 2Ax - \lambda b \overset{!}{=} 0 \\
+    \end{align*}
+    \begin{align*}
+        Ax = \frac{1}{2} \lambda b
     \end{align*}
     
     This shows that the only points which can be possibly maximize (or minimize)
