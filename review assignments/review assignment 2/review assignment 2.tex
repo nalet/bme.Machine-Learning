@@ -156,12 +156,21 @@ Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f
 
         \item Show that
         \begin{align*}
-            \frac{\partial}{\partial X} \prod_{i=1}{n} \lambda_i = \textrm(det)(X)X^{-\intercal}
+            \frac{\partial}{\partial X} \prod_{i=1}{n} \lambda_i = \textrm{det}(X)X^{-\intercal}
         \end{align*}
         where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
 
         \noindent\rule{\linewidth}{1pt}
+        \begin{align*}
+            \textrm{det}(X)X^{-\intercal} = \begin{bmatrix}
+                \frac{\partial }{\partial x_{11}}  &   \frac{\partial }{\partial x_{1n}}  \\
+                \frac{\partial }{\partial x_{n1}}  &   \frac{\partial }{\partial x_{nn}}  \\
+            \end{bmatrix} \{\lambda_1 \cdot \lambda_2 \cdot \dots \lambda_n \}
+        \end{align*}
 
+        \begin{align*}
+            \textrm{det}(X) \rightarrow x_{11} x_{nn} + x_{1n}x_{n1}
+        \end{align*}
 
     \end{enumerate}   
     
