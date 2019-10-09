@@ -106,28 +106,90 @@ Define the composition $h : \mathbb{R}^m \rightarrow \mathbb{R}^p$ by $h(z)= g(f
 
     \begin{enumerate}
 
-        \item Consider the function $h : \mathbb{R}^n \rightarrow \mathbb{R}$ and $h(x)= x^\intercal Qx$, where $Q \in \mathbb{R}^{n \times n}$ is a symmetric matrix. Calculate .$h(x)$ by using the product rule, the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
+        \item Consider the function $h : \mathbb{R}^n \rightarrow \mathbb{R}$ and $h(x)= x^\intercal Qx$, where $Q \in \mathbb{R}^{n \times n}$ is a symmetric matrix. Calculate $\nabla h(x)$ by using the product rule, the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
+        
+        \noindent\rule{\linewidth}{1pt}
+        
+        We notice that $\nabla g(x)=2x$, therefore 
+
+        \begin{align*}
+            \nabla h(x) &= \frac{\partial x^\intercal Qx^\intercal}{\partial x} \\
+                        &= 2Qx
+        \end{align*}
+        
         \item Consider the function $f : \mathbb{R}^n \rightarrow \mathbb{R}$, where $f(x)= \lVert Ax - b \rVert ^2$ , $A \in \mathbb{R}^{m \times n}$ , and $b \in \mathbb{R}^m $. Calculate $\nabla h(x)$ by using the chain rule in eq. (2), the gradient of g in eq. (3), and the Jacobian of the linear function $a(x)$. 
+        
+        \noindent\rule{\linewidth}{1pt}
+        
         \item Consider a function $f : \mathbb{R}^n \rightarrow \mathbb{R}$. Suppose we have a matrix $A \in \mathbb{R}^{n \times m}$ and a vector $x \in \mathbb{R}^m $. Calculate $\nabla xf(Ax)$ as a function of $\nabla xf(x)$.
+        
+        \noindent\rule{\linewidth}{1pt}
+
+        \begin{align*}
+            \lVert Ax - b \rVert ^2 &= (Ax - b)^\intercal (Ax - b) \\
+            &= x^\intercal A^\intercal Ax-2b^\intercal Ax+b^\intercal b \\
+        \end{align*}
+
+        \begin{align*}
+            \nabla h(x) &= \frac{\partial x^\intercal A^\intercal Ax-2b^\intercal Ax^\intercal}{\partial x} \\
+                        &= 2Qx
+        \end{align*}
+        
         \item Show that
         \begin{align*}
             \frac{\partial}{\partial X} \sum_{i=1}{n} \lambda_i = 1
         \end{align*}
         where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
+
+        \noindent\rule{\linewidth}{1pt}
+
         \item Show that
         \begin{align*}
             \frac{\partial}{\partial X} \prod_{i=1}{n} \lambda_i = \textrm(det)(X)X^{-\intercal}
         \end{align*}
         where $X \in \mathbb{R}^{m \times n}$ and has eigenvalues $\lambda_1 \dots \lambda_n$
+
+        \noindent\rule{\linewidth}{1pt}
+
+
     \end{enumerate}   
     
     \item Assume $A \in \mathbb{R}^{m \times n} $, $X \in \mathbb{R}^{m \times n} $, and $B \in \mathbb{R}^{m \times m} $. Show that $\nabla X \textrm{tr}(AX^\intercal B) = BA$
     
+    \noindent\rule{\linewidth}{1pt}
+    \begin{align*}
+        BA &= \nabla X \textrm{tr}(AX^\intercal B) \\
+           &= \nabla X \textrm{tr}(X^\intercal BA) & \textrm{we can get rid of the trace}\\
+           &= ((BA)^\intercal )^\intercal  & \textrm{transpose of transpose eliminate each other}\\
+           &= BA
+    \end{align*}
+
     \item Solve the following equality constrained optimization problem
     \begin{align*}
         \underset{\textrm{max}}{x \in \mathbb{R}^n} x^\intercal Ax \qquad \textrm{subject to} \; b^\intercal x=1
     \end{align*}
     for a symmetric matrix $A \in \mathbb{S}^n $. Assume that $A$ is invertible and $b \neq 0$. 
+
+    \noindent\rule{\linewidth}{1pt}
+
+    A standard way of solving optimization problems with equality constraints is by
+    forming the Lagrangian, an objective function that includes the equality constraints.
+    The Lagrangian in this case is be given by
+
+    \begin{align*}
+        \mathcal{L}(x, \lambda) = x^\intercal Ax - \lambda(b^\intercal x - 1).
+    \end{align*}
+
+    The parameter $\lambda$ is called the Lagrangian multiplier associated with the equality
+    constraint. It can be shown that for $x*$ to be an optimal solution to the problem,
+    the gradient of the Lagrangian w.r.t. $x$ has to be zero at $x*$. That is,
+
+    \begin{align*}
+        \nabla_x (\mathcal{L}(x, \lambda)) = \nabla_x (x^\intercal Ax - \lambda b^\intercal x) \overset{!}{=} 2Ax - 2\lambda b \
+    \end{align*}
+    
+    This shows that the only points which can be possibly maximize (or minimize)
+    $b^\intercal Ax$ assuming $x^\intercal b = 1$ are the eigenvectors of $A$.
 
 \end{enumerate}
 
