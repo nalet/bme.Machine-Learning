@@ -25,8 +25,12 @@ def gradient_function(theta, X, y):
     #                                                                     #
     #######################################################################
     
-    h = tanh(np.dot(theta, X.T))
-    grad = np.dot((y - h), X)/2
+    if(len(X.shape) != 2):
+        h_theta = tanh(np.dot(X,theta))
+        grad = np.sum( (1/X.shape[0]) * (h_theta - y) * (1 - h_theta**2) * X )
+    else:
+        h_theta = tanh(np.matmul(X,theta))
+        grad = (1/X.shape[0]) * 2 * np.dot((h_theta - y) * (1 - h_theta**2),X )
 
     #######################################################################
     #                         END OF YOUR CODE                            #

@@ -25,11 +25,11 @@ def hog_features(X):
         #                                                                     #
         #######################################################################
 
-        imgs = np.reshape(X[i,1:], [24, 24], order='F')
-        hog_vecs = hog(imgs, pixels_per_cell=(4, 4),
-                       cells_per_block=(1, 1), block_norm = 'L2-Hys')
-        
-        hog_list.append(np.concatenate((np.ones((1)), hog_vecs)))
+        img = np.reshape(X[i,1:X.shape[1]],[24,24], order='F')
+        feature_vector, hog_image = hog(img, orientations=9, pixels_per_cell=(4, 4), cells_per_block=(2, 2),
+                    block_norm = 'L2-Hys', visualise=True, transform_sqrt=False,
+                    feature_vector=True)
+        hog_list.append(np.concatenate((np.ones((1)), feature_vector), axis=0))
 
         #######################################################################
         #                         END OF YOUR CODE                            #

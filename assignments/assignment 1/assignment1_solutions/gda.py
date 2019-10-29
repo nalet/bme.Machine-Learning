@@ -32,17 +32,36 @@ def gda(X, y):
     #                                                                     #
     #######################################################################
 
-    yC = np.where(y == 0, 1, 0)
-    mu_1 = 1.0 / np.sum(y) * X.T.dot(y)
-    mu_0 = 1.0 / np.sum(yC) * X.T.dot(yC)
-    sigma = np.zeros((X.shape[1], X.shape[1]))
+    # phi = np.mean(y) # same as (1/X.shape[0]) * y[y == 1].sum()
+    # mu_0 = np.dot(1-y,X) / np.sum(1-y)
+    # mu_1 = np.dot(y,X) / np.sum(y)
     
-    for i in range(y.shape[0]):
-        if(y[i] == 0):
-            sigma += (X[i, :] - mu_0)[:, None].dot((X[i, :] - mu_0)[:, None].T)
-        else:
-            sigma += (X[i, :] - mu_1)[:, None].dot((X[i, :] - mu_1)[:, None].T)
-    sigma = 1.0 / X.shape[0] * sigma
+    # mu_y = np.outer(1-y,mu_0) + np.outer(y,mu_1)
+    # sigma = (1.0/X.shape[0]) * np.dot((X-mu_y).T,X-mu_y)
+
+    # Computation of phi (the mean of the bernoulli distribution)
+    phi = (1/X.shape[0]) * y[y == 1].sum()
+
+    # Computation of the mean vector mu_0 and mu_1
+    #np.sum(..., axis=0) is the collumn-sum...so the means for every feature over the whole batch is calculated
+    print(X)
+    mu_0 = np.divide(np.sum(X[y==0],axis=0),np.sum((y==0)*1.0))
+    mu_1 = np.divide(np.sum(X[y==1],axis=0),np.sum((y==1)*1.0))
+
+    # Compute the mean vector mu_y depending on the vectors mu_y_0asMAt and mu_y_1asMAt 
+    # by computing a matrix of size "X.shape[0] x X.shape[1]"
+    # some notes to np.array: -np.array([1,2,3]) creates a collumnvector [1,2,3]^T.
+    #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([1,2,3])
+    #                         -np.array(mu_0) creates a collumn-vector mu_0^T
+    #                         -np.array([[1,2,3]]) creates a rowvoctor [1,2,3].
+    #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([[1,2,3]])
+    #                         -np.array([mu_0]) creates a collumn-vector mu_0
+    mu_y_0asMAt = np.multiply(np.array([mu_0]*X.shape[0]),np.transpose(1-np.array([y]*X.shape[1])))
+    mu_y_1asMAt = np.multiply(np.array([mu_1]*X.shape[0]),np.transpose(np.array([y]*X.shape[1])))
+    mu_y = mu_y_0asMAt+mu_y_1asMAt
+
+    # Computation of the covariance matrix sigma
+    sigma = 1.0/X.shape[0]*np.matmul(np.transpose(np.subtract(X,mu_y)),np.subtract(X,mu_y))
 
     #######################################################################
     #                         END OF YOUR CODE                            #

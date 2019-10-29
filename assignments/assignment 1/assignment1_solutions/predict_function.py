@@ -18,10 +18,10 @@ def predict_function(theta, X, y=None):
     #                                                                     #
     #######################################################################
     
-    preds = np.where(tanh(np.dot(theta, X.T)) > 0.5, 1, 0)
+    preds = np.where(tanh(np.dot(theta, X.T)) > 0, 1, -1)
     
     if (y.any != None):
-        accuracy = 1.0/y.shape[0] * np.sum(np.where(y - preds == 0, 1, 0))
+        accuracy = 1.0/y.shape[0] * np.sum(np.where(y - preds == 0, 1, 0)) # to check if similar
     
     #######################################################################
     #                         END OF YOUR CODE                            #
