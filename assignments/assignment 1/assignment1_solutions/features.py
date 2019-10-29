@@ -27,7 +27,7 @@ def hog_features(X):
 
         img = np.reshape(X[i,1:X.shape[1]],[24,24], order='F')
         feature_vector, hog_image = hog(img, orientations=9, pixels_per_cell=(4, 4), cells_per_block=(2, 2),
-                    block_norm = 'L2-Hys', visualise=True, transform_sqrt=False,
+                    block_norm = 'L2-Hys', visualize=True, transform_sqrt=False,
                     feature_vector=True)
         hog_list.append(np.concatenate((np.ones((1)), feature_vector), axis=0))
 
