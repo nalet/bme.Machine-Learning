@@ -17,11 +17,12 @@ def tanh(z):
     g = None
     #######################################################################
     # TODO:                                                               #
-    # Compute and return the tanh of z in g                            #
+    # Compute and return the tanh of z in g                               #
     #######################################################################
 
-    #g = (exp(2*z)-1) / (exp(2*z)+1)
-    g = np_tanh(z)
+    g = np_tanh(z) # using numpy for performance
+                   # Equal to np.sinh(z)/np.cosh(z)
+                   # Or (exp(2*z)-1) / (exp(2*z)+1)
 
     #######################################################################
     #                         END OF YOUR CODE                            #
