@@ -47,6 +47,16 @@ def gda(X, y):
     
     # # sigma = np.matmul(matrix.T, matrix) / y.shape[0]
 
+    yp1 = np.where(y == 1,1,0)
+    ym1 = np.where(y == -1,1,0)
+
+    phi = (1/X.shape[0]) * np.sum(yp1)
+    mu_0 = np.dot(ym1,X) / np.sum(ym1)
+    mu_1 = np.dot(yp1,X) / np.sum(yp1)
+    
+    mu_y = np.outer(ym1,mu_0) + np.outer(yp1,mu_1)
+    sigma = 1.0/X.shape[0]*np.dot((X-mu_y).T,X-mu_y)
+
     # # print(mu_0)
 
     # phi = (1/X.shape[0]) * np.sum(yp1)
@@ -91,29 +101,29 @@ def gda(X, y):
 
     # print(sigma)
 
-    # Computation of phi (the mean of the bernoulli distribution)
-    y[y==-1]=0
-    phi = np.mean(y)
+    # # Computation of phi (the mean of the bernoulli distribution)
+    # y[y==-1]=0
+    # phi = np.mean(y)
 
-    # Computation of the mean vector mu_0 and mu_1
-    #np.sum(..., axis=0) is the collumn-sum...so the means for every feature over the whole batch is calculated
-    mu_0 = np.divide(np.sum(X[y==0],axis=0),np.sum((y==0)*1.0))
-    mu_1 = np.divide(np.sum(X[y==1],axis=0),np.sum((y==1)*1.0))
+    # # Computation of the mean vector mu_0 and mu_1
+    # #np.sum(..., axis=0) is the collumn-sum...so the means for every feature over the whole batch is calculated
+    # mu_0 = np.divide(np.sum(X[y==0],axis=0),np.sum((y==0)*1.0))
+    # mu_1 = np.divide(np.sum(X[y==1],axis=0),np.sum((y==1)*1.0))
 
-    # Compute the mean vector mu_y depending on the vectors mu_y_0asMAt and mu_y_1asMAt 
-    # by computing a matrix of size "X.shape[0] x X.shape[1]"
-    # some notes to np.array: -np.array([1,2,3]) creates a collumnvector [1,2,3]^T.
-    #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([1,2,3])
-    #                         -np.array(mu_0) creates a collumn-vector mu_0^T
-    #                         -np.array([[1,2,3]]) creates a rowvoctor [1,2,3].
-    #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([[1,2,3]])
-    #                         -np.array([mu_0]) creates a collumn-vector mu_0
-    mu_y_0asMAt = np.multiply(np.array([mu_0]*X.shape[0]),np.transpose(1-np.array([y]*X.shape[1])))
-    mu_y_1asMAt = np.multiply(np.array([mu_1]*X.shape[0]),np.transpose(np.array([y]*X.shape[1])))
-    mu_y = mu_y_0asMAt+mu_y_1asMAt
+    # # Compute the mean vector mu_y depending on the vectors mu_y_0asMAt and mu_y_1asMAt 
+    # # by computing a matrix of size "X.shape[0] x X.shape[1]"
+    # # some notes to np.array: -np.array([1,2,3]) creates a collumnvector [1,2,3]^T.
+    # #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([1,2,3])
+    # #                         -np.array(mu_0) creates a collumn-vector mu_0^T
+    # #                         -np.array([[1,2,3]]) creates a rowvoctor [1,2,3].
+    # #                         -mu_0 and mu_1 are collumnvectors as [1,2,3] in the above argument in np.array([[1,2,3]])
+    # #                         -np.array([mu_0]) creates a collumn-vector mu_0
+    # mu_y_0asMAt = np.multiply(np.array([mu_0]*X.shape[0]),np.transpose(1-np.array([y]*X.shape[1])))
+    # mu_y_1asMAt = np.multiply(np.array([mu_1]*X.shape[0]),np.transpose(np.array([y]*X.shape[1])))
+    # mu_y = mu_y_0asMAt+mu_y_1asMAt
 
-    # Computation of the covariance matrix sigma
-    sigma = 1.0/X.shape[0]*np.matmul(np.transpose(np.subtract(X,mu_y)),np.subtract(X,mu_y))
+    # # Computation of the covariance matrix sigma
+    # sigma = 1.0/X.shape[0]*np.matmul(np.transpose(np.subtract(X,mu_y)),np.subtract(X,mu_y))
 
 
     #######################################################################
