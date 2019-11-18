@@ -29,7 +29,10 @@ def svm_gradient(w, b, x, y, C):
     #                                                                     #
     #######################################################################
 
+    grad = np.where(y * (x @ w + b) > 1.0, np.zeros(y.shape[0]), -y)
 
+    grad_w = ((x.T * grad).T + w/C).sum(axis=0) / x.shape[0]
+    grad_b = grad.sum(axis=0) /x.shape[0]
 
     #######################################################################
     #                         END OF YOUR CODE                            #
