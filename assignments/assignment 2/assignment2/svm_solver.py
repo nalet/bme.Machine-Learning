@@ -37,12 +37,12 @@ def svm_solver(X, y, C, num_iter=5000, num_per_batch=32):
 
         # 1st Step: Sample a random mini-batch of size num_per_batch
         
-        index_array = np.arange(X.shape[0])
-        #np.random.permutation(index_array)
-        np.random.sample(index_array)
-        
-        mini_batch_X = X[:num_per_batch,...]
-        mini_batch_y = y[:num_per_batch,...]
+        idxs = np.arange(X.shape[0])
+        #np.random.permutation(idxs)
+        np.random.shuffle(idxs)
+    
+        mini_batch_X = X[idxs[:num_per_batch],...]
+        mini_batch_y = y[idxs[:num_per_batch],...]
 
         # 2nd Step: Compute the learning-rate n_t=1/(lambda*t) where lambda=1/C
 

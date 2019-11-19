@@ -25,7 +25,7 @@ def svm_loss(w, b, X, y, C):
     #######################################################################
 
     l = np.linalg.norm(w)**2 / 2*C + \
-    np.maximum(np.zeros(y.shape[0]), 1.0-(y @ X @ w + b)).sum() / y.shape[0]
+    np.maximum(np.zeros(y.shape[0]), 1-(y @ X @ w + b)).sum() / y.shape[0]
     
     #######################################################################
     #                         END OF YOUR CODE                            #
