@@ -33,7 +33,9 @@ def logistic_Newton(X, y, num_iter=10):
         # Hint: To solve for A^(-1)b consider using np.linalg.solve for speed #
         #######################################################################
 
-        pass
+        h_theta_X = sigmoid(np.dot(X, theta))
+        hessian = ((h_theta_X * (h_theta_X - 1)) * (X.T)) @ X
+        theta -= np.linalg.solve(hessian, gradient_function(theta, X, y))
 
         #######################################################################
         #                         END OF YOUR CODE                            #

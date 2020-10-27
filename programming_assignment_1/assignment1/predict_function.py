@@ -18,7 +18,8 @@ def predict_function(theta, X, y=None):
     #                                                                     #
     #######################################################################
     
-    pass
+    preds = sigmoid(np.dot(X, theta)) >= 0.5
+    accuracy = np.mean(y == preds)
 
     #######################################################################
     #                         END OF YOUR CODE                            #

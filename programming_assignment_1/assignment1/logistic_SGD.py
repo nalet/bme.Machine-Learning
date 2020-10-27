@@ -32,7 +32,8 @@ def logistic_SGD(X, y, num_iter=100000, alpha=0.01):
         #                                                                     #
         #######################################################################
 
-        pass
+        rnd = np.random.randint(X.shape[0])
+        theta += alpha * gradient_function(theta, X[rnd], y[rnd])
 
         #######################################################################
         #                         END OF YOUR CODE                            #
